@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/addData"
+        android:icon="@drawable/new_add_circle_24"
+        android:title="Add"
+        app:cnb_iconColor="@color/blue"/>
+
+    <item
+        android:id="@+id/myData"
+        android:icon="@drawable/new_file_24"
+        android:title="Expenses"
+        app:cnb_iconColor="@color/orange"/>
+
+    <item
+        android:id="@+id/roomData"
+        android:icon="@drawable/new_folder_24"
+        android:title="Room"
+        app:cnb_iconColor="@color/green" />
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/new_statistics_24"
+        android:title="Statistics"
+        app:cnb_iconColor="@color/purple" />
+
+</menu>

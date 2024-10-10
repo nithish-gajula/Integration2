@@ -1,0 +1,34 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Integration2" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@android:color/darker_gray</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <color name="blank">#696969</color>
+    <color name="sky_blue">#FF0076F7</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="blue">#2196F3</color>
+    <color name="orange">#FB8C00</color>
+    <color name="pink">#ee437d</color>
+    <color name="green">#4CAF50</color>
+    <color name="purple">#673AB7</color>
+
+    <color name="blue_light">#e8f4fd</color>
+    <color name="orange_light">#fef3e5</color>
+    <color name="pink_light">#fce8ef</color>
+    <color name="green_light">#edf7ed</color>
+    <color name="purple_light">#efebf7</color>
+</resources>

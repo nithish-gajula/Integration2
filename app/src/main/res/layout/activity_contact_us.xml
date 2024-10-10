@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ContactUsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Contact Us"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dropdown_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv"
+            android:hint="Select Category"
+            android:layout_margin="15dp"
+            app:startIconDrawable="@drawable/ic_linkedin_16">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dropdown_layout"
+            android:layout_margin="10dp"
+            android:hint="Your Comments"
+            app:startIconDrawable="@mipmap/email_body_48">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailbodyid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="8" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/add_attachment_tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtInputLayout"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:drawableStart="@drawable/ic_add_circle"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="Add attachment"
+            android:textColor="@color/sky_blue"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!--ImageView to preview the selected image-->
+        <ImageView
+            android:id="@+id/IVPreviewImage"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:layout_below="@id/add_attachment_tv_id"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/Bsend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/IVPreviewImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:backgroundTint="#F8BBD0"
+            android:drawableLeft="@mipmap/gmail_logo_24"
+            android:fontFamily="sans-serif-medium"
+            android:text="send"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+</ScrollView>

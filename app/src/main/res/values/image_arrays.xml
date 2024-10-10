@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="avatar_ids">
+        <item>@mipmap/avatar1</item>
+        <item>@mipmap/avatar2</item>
+        <item>@mipmap/avatar3</item>
+        <item>@mipmap/avatar4</item>
+        <item>@mipmap/avatar5</item>
+        <item>@mipmap/avatar6</item>
+        <item>@mipmap/avatar7</item>
+        <item>@mipmap/avatar8</item>
+        <item>@mipmap/avatar9</item>
+        <item>@mipmap/avatar10</item>
+        <item>@mipmap/avatar11</item>
+        <item>@mipmap/avatar12</item>
+    </integer-array>
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_add_data"
+            android:icon="@mipmap/add_in"
+            android:title="Add Data" />
+
+        <item
+            android:id="@+id/nav_individual_data"
+            android:icon="@mipmap/document_in"
+            android:title="Get Data" />
+
+        <item
+            android:id="@+id/nav_all_data"
+            android:icon="@mipmap/user_folder_in"
+            android:title="Get All Data" />
+
+
+        <item
+            android:id="@+id/nav_contact_us"
+            android:icon="@mipmap/insect_in"
+            android:title="Contact Us" />
+
+
+    </group>
+
+    <item android:title="Quick Actions">
+
+        <menu>
+
+
+            <item
+                android:id="@+id/nav_relaunch"
+                android:icon="@drawable/synchronize"
+                android:title="Restart" />
+
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/info"
+                android:title="About" />
+
+        </menu>
+
+    </item>
+
+</menu>

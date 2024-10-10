@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Integration2</string>
+
+    <string name="spreadsheet_url">https://script.google.com/macros/s/AKfycbzFKvumCrRwhmzmxBPM0T7fez8Nog5fmywyRdnxJb5wzSRFvon80by2Y-ZK6aEqM6pW/exec</string>
+
+
+
+    <string name="incorrect_password">Incorrect Password</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="no_user_data_found">Email not exists</string>
+    <string name="enter_valid_email">Enter valid email</string>
+    <string name="password_should_not_be_empty">Password should not be empty</string>
+    <string name="user_already_exist">User already exists</string>
+    <string name="roomId_should_not_be_empty">RoomID should not be empty</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="enter_valid_name">Enter valid name</string>
+    <string name="enter_valid_phone_number">Enter valid phone number</string>
+    <string name="password_not_matched">Password not matched</string>
+    <string name="enter_valid_age">Enter valid age</string>
+    <string name="user_id_not_found">User not found</string>
+    <string name="invalid_roomId">Invalid room ID</string>
+    <string name="alphabets">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+    <string name="update_marquee">
+        Updates Available <a href="#"> Click Here </a>
+    </string>
+
+    <string name="version">2.1</string>
+
+    <string name="about_developer">
+        This application was developed by - <font face="serif" fgcolor='#CC000000'> <b> Nithish G </b> </font>
+    </string>
+
+    <string name="email_info">mailto:gajulanithish000@gmail.com</string>
+    <string name="github_info">https://github.com/nithish-gajula</string>
+    <string name="instagram_info">https://www.instagram.com/nithish_gajula/</string>
+    <string name="linkedin_info">https://www.linkedin.com/in/nithish-gajula-90130b227/</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="you_entered">You Entered %1$s</string>
+
+    // Add Data Fragment
+    <string name="amount_entered_AD"> ₹ %1$s</string>
+    <string name="description_entered_AD"> %1$s</string>
+
+    // Delete Data Fragment
+    <string name="data_id_dialog_DD"> %1$s</string>
+    <string name="date_dialog_DD"> %1$s</string>
+    <string name="amount_dialog_DD"> %1$s</string>
+    <string name="description_dialog_DD"> %1$s</string>
+
+    // Get Data Fragment
+    <string name="total_amount_GD"> ₹ %1$d</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

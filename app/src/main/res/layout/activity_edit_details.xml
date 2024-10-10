@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".EditDetailsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:layout_marginVertical="5dp"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="40dp" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profile_image_id"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:strokeColor="@color/grey"
+        app:strokeWidth="1dp"
+        android:src="@drawable/ic_instagram_16" />
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:id="@+id/name_til_id"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:hint="Name"
+        app:startIconDrawable="@mipmap/user">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_et_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_til_id"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="Email"
+        app:helperText="Email can't be changed"
+        app:startIconDrawable="@mipmap/at_sign">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_et_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phone_no_til_id"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:hint="Phone Number"
+        app:startIconDrawable="@mipmap/phone_call">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone_no_et_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="10"
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/age_til_id"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:hint="Age"
+        app:startIconDrawable="@mipmap/parental_control">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/age_et_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_btn_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="5dp"
+        android:textColor="@color/white"
+        android:backgroundTint="#0076F7"
+        android:fontFamily="sans-serif-medium"
+        android:text="Save"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/result_tv_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Result will be here"
+        android:textColor="#FF0000"
+        android:visibility="invisible" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginVertical="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="Forgot Password?"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/reset_password_tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="Change here"
+            android:textColor="#0076F7"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

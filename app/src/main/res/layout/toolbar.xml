@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:minHeight="?attr/actionBarSize"
+    android:elevation="1dp"
+    app:title="   Room Budget"
+    app:titleTextColor="#000"
+    app:titleTextAppearance="@style/ToolbarTitleStyle"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+    <!-- Customize the toolbar content here -->
+    <ImageView
+        android:id="@+id/custom_overflow_icon"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_dots"
+        android:contentDescription="Menu"
+        android:layout_gravity="end" />
+
+</androidx.appcompat.widget.Toolbar>

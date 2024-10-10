@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_1_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:layout_margin="10dp"
+            android:src="@mipmap/avatar1" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_2_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar2" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_3_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_4_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar4" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_5_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:layout_margin="10dp"
+            android:src="@mipmap/avatar5" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_6_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar6" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_7_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar7" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_8_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar8" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_9_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:layout_margin="10dp"
+            android:src="@mipmap/avatar9" />
+
+        
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_10_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar10" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_11_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar11" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/select_avatar_12_id"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/grey"
+            app:strokeWidth="1dp"
+            android:src="@mipmap/avatar12" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,39 @@
+<!-- section_header_layout.xml -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/section_header_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/section_header_month"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:textColor="@android:color/black"
+        android:gravity="left"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="Section"
+        android:fontFamily="monospace"
+        android:textSize="18sp"
+        android:paddingLeft="20dp" />
+
+    <TextView
+        android:id="@+id/section_header_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:textColor="@android:color/black"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:padding="8dp"
+        android:text="Amount"
+        android:paddingRight="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
+
