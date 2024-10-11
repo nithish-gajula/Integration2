@@ -57,5 +57,8 @@
     <string name="total_amount_GD"> ₹ %1$d</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+
 
 </resources>

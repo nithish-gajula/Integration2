@@ -29,14 +29,12 @@ class UserDataViewModel : ViewModel() {
 
     private fun loadUserData() {
 
-        // Check if directory exists, if not, handle it
         if (!ActivityUtils.directory.exists()) {
-            ActivityUtils.directory.mkdirs() // Create the directory if not present
+            ActivityUtils.directory.mkdirs()
         }
 
-        // Check if the user data file exists, if not, handle it
         if (!ActivityUtils.userDataFile.exists()) {
-            ActivityUtils.userDataFile.createNewFile() // Create the file if not present
+            ActivityUtils.userDataFile.createNewFile()
         }
 
         try {
@@ -65,7 +63,7 @@ class UserDataViewModel : ViewModel() {
                 profileId :  $profileId
             """.trimIndent()
 
-            LOGGING.INFO(contextTAG, info)
+            LOGGING.INFO(contextTAG, "Application Launched , User Info found - $info")
 
             if (roomId.length <= 1) {
                 isRoomLengthLessThanOne = true

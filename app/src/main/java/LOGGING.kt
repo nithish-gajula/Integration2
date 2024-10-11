@@ -11,9 +11,11 @@ object LOGGING {
             val methodName = stackTrace[3].methodName
             val lineNumber = stackTrace[3].lineNumber
             val fileName = stackTrace[3].fileName
-            val logContent = "\n[ ${getCurrentDateTime()} ] [INFO] [$fileName] [$methodName] [$lineNumber] \n$msg \n--------------------------------------------"
-            val markdownContent = "\n[ *${getCurrentDateTime()}* ] [<font color='blue'>**INFO**</font>] [$fileName] [$methodName] [$lineNumber] \n" +
-                    ">$msg \n *** \n"
+            val logContent =
+                "\n[ ${getCurrentDateTime()} ] [INFO] [$fileName] [$methodName] [$lineNumber] \n $context \n$msg \n------------------------------------------"
+            val markdownContent =
+                "\n[ *${getCurrentDateTime()}* ] [<font color='blue'>**INFO**</font>] [$fileName] [$methodName] [$lineNumber] \n" + "`$context` \n" +
+                        ">$msg \n *** \n"
             reportLog(logContent, markdownContent)
         }
         Log.i(context, msg)
@@ -27,9 +29,28 @@ object LOGGING {
             val methodName = stackTrace[3].methodName
             val lineNumber = stackTrace[3].lineNumber
             val fileName = stackTrace[3].fileName
-            val logContent = "\n[ ${getCurrentDateTime()} ] [DEBUG] [$fileName] [$methodName] [$lineNumber] \n$msg \n--------------------------------------------"
-            val markdownContent = "\n[ *${getCurrentDateTime()}* ] [<font color='orange'>**DEBUG**</font>] [$fileName] [$methodName] [$lineNumber] \n" +
-                    ">$msg \n *** \n"
+            val logContent =
+                "\n[ ${getCurrentDateTime()} ] [DEBUG] [$fileName] [$methodName] [$lineNumber] \n $context \n$msg \n-----------------------------------------"
+            val markdownContent =
+                "\n[ *${getCurrentDateTime()}* ] [<font color='orange'>**DEBUG**</font>] [$fileName] [$methodName] [$lineNumber] \n" + "`$context` \n" +
+                        ">$msg \n *** \n"
+            reportLog(logContent, markdownContent)
+        }
+        Log.d(context, msg)
+    }
+
+    fun ERROR(context: String, msg: String) {
+
+        val stackTrace = Thread.currentThread().stackTrace
+        if (stackTrace.size >= 3) {
+            val methodName = stackTrace[3].methodName
+            val lineNumber = stackTrace[3].lineNumber
+            val fileName = stackTrace[3].fileName
+            val logContent =
+                "\n[ ${getCurrentDateTime()} ] [ERROR] [$fileName] [$methodName] [$lineNumber] \n $context \n$msg \n-----------------------------------------"
+            val markdownContent =
+                "\n[ *${getCurrentDateTime()}* ] [<font color='red'>**ERROR**</font>] [$fileName] [$methodName] [$lineNumber] \n" + "`$context` \n" +
+                        ">$msg \n *** \n"
             reportLog(logContent, markdownContent)
         }
         Log.d(context, msg)

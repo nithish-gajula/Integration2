@@ -2,9 +2,9 @@ package com.example.integration2
 
 import CustomAdapter
 import Item
+import LOGGING
 import Section
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +34,6 @@ class GetAllDataFragment : Fragment() {
     private val groupedItemsJson = JSONObject()
     private lateinit var warningTV: TextView
     private lateinit var roomActivity: RoomActivity
-
     private val contextTAG: String = "GetAllDataFragment"
 
     /****** Implement below things ****
@@ -46,10 +45,8 @@ class GetAllDataFragment : Fragment() {
     Party
     Travelling */
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         val v = inflater.inflate(R.layout.fragment_get_all_data, container, false)
         listView = v.findViewById(R.id.lv_items2)
         roomActivity = activity as RoomActivity
@@ -61,22 +58,18 @@ class GetAllDataFragment : Fragment() {
         listView.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position)
             if (selectedItem is Item) {
-                LOGGING.DEBUG(contextTAG, "Entered in listView onclick if condition")
                 val userName = selectedItem.userName
                 val date = selectedItem.date
                 val amount = selectedItem.amount
-                val id = selectedItem.id
                 val fullDescription = selectedItem.fullDescription
 
-                popUpDetails(id, userName, date, amount, fullDescription)
+                popUpDetails(userName, date, amount, fullDescription)
             }
         }
-
         return v
     }
 
     private fun getItems() {
-        LOGGING.INFO(contextTAG, "Entered in getItems Function")
         val roomId = userDataViewModel.roomId
         val param = "?action=getTotal&roomId=$roomId"
         val url = resources.getString(R.string.spreadsheet_url)
@@ -86,7 +79,9 @@ class GetAllDataFragment : Fragment() {
         val stringRequest = StringRequest(
             Request.Method.GET, url + param,
             { response -> parseItems(response) }
-        ) { }
+        ) { error ->
+            LOGGING.INFO(contextTAG, "Got error = $error")
+        }
 
         val policy: RetryPolicy =
             DefaultRetryPolicy(50000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
@@ -96,8 +91,6 @@ class GetAllDataFragment : Fragment() {
     }
 
     private fun parseItems(jsonResponse: String) {
-        LOGGING.DEBUG(contextTAG, "Entered in parseItems function")
-        //LOGGING.DEBUG(contextTAG, "jsonResponse :  $jsonResponse")
         try {
             val jsonObj = JSONObject(jsonResponse)
             val jsonArray = jsonObj.getJSONArray("items")
@@ -166,6 +159,7 @@ class GetAllDataFragment : Fragment() {
 
             categorizeItems(sortedMonths)
         } catch (e: JSONException) {
+            LOGGING.DEBUG(contextTAG, "Got error $e")
             warningTV.visibility = View.VISIBLE
             warningTV.text = jsonResponse
             roomActivity.alertDialog.dismiss()
@@ -247,14 +241,7 @@ class GetAllDataFragment : Fragment() {
     }
 
 
-    private fun popUpDetails(
-        id: String,
-        userName: String,
-        date: String,
-        amount: String,
-        fullDescription: String,
-    ) {
-        LOGGING.INFO(contextTAG, "Entered in popUpDetails function")
+    private fun popUpDetails(userName: String, date: String, amount: String, fullDescription: String ) {
         val mBuilder = AlertDialog.Builder(requireActivity())
         val view1: View = layoutInflater.inflate(R.layout.popup_details, null)
         val userNameD = view1.findViewById<TextView>(R.id.user_confirm_id)
@@ -267,7 +254,6 @@ class GetAllDataFragment : Fragment() {
         dateD.text = getString(R.string.date_dialog_DD, date)
         amountD.text = getString(R.string.amount_dialog_DD, amount)
         descriptionD.text = getString(R.string.description_dialog_DD, fullDescription)
-        LOGGING.INFO(contextTAG, "triggered $id $date $amount $fullDescription")
         dialog1.setCanceledOnTouchOutside(true)
         dialog1.show()
     }

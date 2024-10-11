@@ -5,7 +5,6 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +48,6 @@ class AddDataFragment : Fragment() {
     private lateinit var amountTil: TextInputLayout
     private lateinit var descriptionTil: TextInputLayout
     private var foodId: Int = 0
-
     private val contextTAG: String = "AddDataFragment"
 
     override fun onCreateView(
@@ -71,23 +69,16 @@ class AddDataFragment : Fragment() {
 
         onCreateSetup()
 
-
-
-
         return v
     }
 
-    private fun onCreateSetup(){
-
+    private fun onCreateSetup() {
 
         id = userDataViewModel.userId
         userName = userDataViewModel.userName
         roomId = userDataViewModel.roomId
 
-
-
         imageList = ArrayList()
-
         imageList.add(R.drawable.food_1)
         imageList.add(R.drawable.food_2)
         imageList.add(R.drawable.food_3)
@@ -111,7 +102,6 @@ class AddDataFragment : Fragment() {
         viewPager2.clipToPadding = false
         viewPager2.clipChildren = false
         viewPager2.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-
 
         dateTil.setStartIconTintList(null)
         amountTil.setStartIconTintList(null)
@@ -164,7 +154,6 @@ class AddDataFragment : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 foodId = position + 1
-                LOGGING.DEBUG(contextTAG, "FoodID : $foodId")
             }
         })
     }
@@ -206,7 +195,6 @@ class AddDataFragment : Fragment() {
         val amountVal = amount.text.toString().trim { it <= ' ' }
         val descriptionVal = description.text.toString()
 
-        LOGGING.INFO(contextTAG, "date = $dateVal")
         dateD.text = dateVal
         amountD.text = getString(R.string.amount_entered_AD, amountVal)
         descriptionD.text = getString(R.string.description_entered_AD, descriptionVal)
@@ -221,6 +209,7 @@ class AddDataFragment : Fragment() {
                 object : StringRequest(
                     Method.POST, url,
                     Response.Listener { response ->
+                        LOGGING.INFO(contextTAG, "Upload Data, Got Response - $response")
                         animationView.setAnimation(R.raw.done)
                         animationView.playAnimation()
                         Toast.makeText(
@@ -228,7 +217,6 @@ class AddDataFragment : Fragment() {
                             response,
                             Toast.LENGTH_SHORT
                         ).show()
-                        LOGGING.INFO(contextTAG, response)
                         Handler(Looper.getMainLooper()).postDelayed({
                             dialog1.dismiss()
                             amount.setText("")
@@ -237,7 +225,8 @@ class AddDataFragment : Fragment() {
                             GlobalAccess.isUserAddedNewData = true
                         }, 2000)
                     },
-                    Response.ErrorListener {
+                    Response.ErrorListener { error ->
+                        LOGGING.DEBUG(contextTAG, "Upload Data, Got Error - $error")
                         animationView.setAnimation(R.raw.error)
                         animationView.playAnimation()
                     }

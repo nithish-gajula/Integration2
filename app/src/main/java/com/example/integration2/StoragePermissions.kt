@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import java.io.File
 import java.io.IOException
 
-
 class StoragePermissions : AppCompatActivity() {
 
     private val STORAGE_PERMISSION_CODE = 101

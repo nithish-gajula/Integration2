@@ -1,12 +1,11 @@
 package com.example.integration2
 
+import ActivityUtils
 import CustomAdapter
 import Item
 import LOGGING
 import Section
-import ActivityUtils
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -30,12 +29,9 @@ import com.android.volley.RetryPolicy
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -49,15 +45,10 @@ class GetDataFragment : Fragment() {
     private var totalAmount: Double = 0.0
     private lateinit var warningTV: TextView
     private lateinit var roomActivity: RoomActivity
-    private lateinit var bottomSheetDialog : BottomSheetDialog
-    private var bottomSheetState : Boolean = true
-
+    private var bottomSheetState: Boolean = true
     private val userDataViewModel: UserDataViewModel by activityViewModels()
     private var groupedItemsJson = JSONObject()
-
-
     private val contextTAG: String = "GetDataFragment"
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,8 +76,6 @@ class GetDataFragment : Fragment() {
         listView.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position)
             if (selectedItem is Item) {
-                //LOGGING.DEBUG(contextTAG, "Entered in listView onclick if condition")
-                LOGGING.INFO(contextTAG, "Entered in listView onclick if condition")
                 val userName = selectedItem.userName
                 val date = selectedItem.date
                 val amount = selectedItem.amount
@@ -95,25 +84,22 @@ class GetDataFragment : Fragment() {
 
                 delete(id, userName, date, amount, fullDescription)
             } else {
+                bottomSheetState =
+                    BottomSheetBehavior.STATE_EXPANDED == BottomSheetBehavior.from(btmsheet).state
 
-                bottomSheetState = BottomSheetBehavior.STATE_EXPANDED == BottomSheetBehavior.from(btmsheet).state
-
-                if(!bottomSheetState){
+                if (!bottomSheetState) {
                     BottomSheetBehavior.from(btmsheet).state = BottomSheetBehavior.STATE_EXPANDED
                     bottomSheetState = true
-                }else{
+                } else {
                     BottomSheetBehavior.from(btmsheet).state = BottomSheetBehavior.STATE_COLLAPSED
                     bottomSheetState = false
                 }
-
             }
         }
-
         return v
     }
-    private fun getItems() {
 
-        LOGGING.INFO(contextTAG, "Entered in getItems Function")
+    private fun getItems() {
 
         val userId = userDataViewModel.userId
         val roomId = userDataViewModel.roomId
@@ -126,12 +112,11 @@ class GetDataFragment : Fragment() {
         val stringRequest = StringRequest(
             Request.Method.GET, url + param,
             { response ->
-                //LOGGING.INFO(contextTAG, "response = $response")
                 FileWriter(ActivityUtils.userExpensesFile).use { it.write(response) }
                 loadUserExpensesFromStorage()
             }
         ) { error ->
-            LOGGING.INFO(contextTAG, "error = $error")
+            LOGGING.DEBUG(contextTAG, "Get Expenses, Got error = $error")
         }
         val socketTimeOut = 50000
         val policy: RetryPolicy =
@@ -142,27 +127,22 @@ class GetDataFragment : Fragment() {
     }
 
     private fun loadUserExpensesFromStorage() {
-        LOGGING.INFO(contextTAG, "Entered in loadUserExpensesFromStorage Function ")
         try {
-
             if (!ActivityUtils.userExpensesFile.exists()) {
-                LOGGING.INFO(contextTAG, "userExpensesFile Not Found, Creating File")
                 ActivityUtils.userExpensesFile.createNewFile()
                 getItems()
             } else {
-                LOGGING.INFO(contextTAG, "userExpensesFile Found, Reading the File")
                 val content = ActivityUtils.userExpensesFile.readText()
-                //groupedItemsJson = JSONObject(content)
                 parseItems(content)
             }
 
         } catch (e: IOException) {
+            LOGGING.DEBUG(contextTAG, "Loading User Expenses from storage error - $e")
             e.printStackTrace()
         }
     }
 
     private fun parseItems(jsonResponse: String) {
-        LOGGING.INFO(contextTAG, "Entered in parseItems Function")
         try {
             val jsonObj = JSONObject(jsonResponse)
             val jsonArray = jsonObj.getJSONArray("items")
@@ -223,6 +203,7 @@ class GetDataFragment : Fragment() {
 
             categorizeItems(sortedMonths)
         } catch (e: JSONException) {
+            LOGGING.DEBUG(contextTAG, "error - $e")
             warningTV.visibility = View.VISIBLE
             warningTV.text = jsonResponse
             roomActivity.alertDialog.dismiss()
@@ -231,7 +212,6 @@ class GetDataFragment : Fragment() {
     }
 
     private fun categorizeItems(months: List<String>) {
-        LOGGING.INFO(contextTAG, "Entered in categorizeItems Function")
         val dataList = mutableListOf<Any>()
         val avatars = intArrayOf(
             R.drawable.food_1,
@@ -265,7 +245,6 @@ class GetDataFragment : Fragment() {
                 val monthData = monthJsonObject.getJSONArray("MonthData")
                 for (j in 0 until monthData.length()) {
                     val itemData = monthData.getJSONObject(j)
-                    //LOGGING.DEBUG(contextTAG, "itemData :  $itemData")
                     dataList.add(
                         Item(
                             itemData.getString("position1"),
@@ -280,12 +259,12 @@ class GetDataFragment : Fragment() {
                 }
             }
         } catch (e: JSONException) {
+            LOGGING.DEBUG(contextTAG, "error - $e")
             e.printStackTrace()
         }
 
         adapter = CustomAdapter(requireContext(), dataList)
         listView.adapter = adapter
-
         roomActivity.alertDialog.dismiss()
         totalAmountTV.text = totalAmount.toString()
     }
@@ -316,7 +295,6 @@ class GetDataFragment : Fragment() {
         amount: String,
         fullDescription: String
     ) {
-        LOGGING.INFO(contextTAG, "Entered in delete function")
         val mBuilder = AlertDialog.Builder(requireActivity())
         val view1: View = layoutInflater.inflate(R.layout.delete_confirmation_dialog, null)
         val userNameD = view1.findViewById<TextView>(R.id.user_confirm_id)
@@ -333,7 +311,6 @@ class GetDataFragment : Fragment() {
         dateD.text = getString(R.string.date_dialog_DD, date)
         amountD.text = getString(R.string.amount_dialog_DD, amount)
         descriptionD.text = getString(R.string.description_dialog_DD, fullDescription)
-        LOGGING.INFO(contextTAG, "triggered $id $date $amount $fullDescription")
         dialog1.setCanceledOnTouchOutside(false)
         dialog1.show()
 
@@ -343,14 +320,12 @@ class GetDataFragment : Fragment() {
             anm1.setAnimation(R.raw.please_wait)
             anm1.playAnimation()
             val url = resources.getString(R.string.spreadsheet_url)
-            LOGGING.INFO(
-                contextTAG,
-                "userId=${userDataViewModel.userId}, roomId=${userDataViewModel.roomId}, rowID=$id"
-            )
+            LOGGING.INFO(contextTAG, "Requesting delete item -> userId=${userDataViewModel.userId}, roomId=${userDataViewModel.roomId}, rowID=$id")
             val stringRequest: StringRequest =
                 object : StringRequest(
                     Method.POST, url,
                     Response.Listener { response ->
+                        LOGGING.INFO(contextTAG, "Delete Item Request, Got Response $response")
                         anm1.setAnimation(R.raw.delete_file)
                         anm1.playAnimation()
                         Handler(Looper.getMainLooper()).postDelayed({
@@ -360,7 +335,8 @@ class GetDataFragment : Fragment() {
                         }, 2000)
                         Toast.makeText(activity, response, Toast.LENGTH_SHORT).show()
                     },
-                    Response.ErrorListener {
+                    Response.ErrorListener { error ->
+                        LOGGING.DEBUG(contextTAG, "Delete Item Request, Got error $error")
                         anm1.setAnimation(R.raw.error)
                         anm1.playAnimation()
                     }
@@ -374,8 +350,6 @@ class GetDataFragment : Fragment() {
                         param["roomId"] = userDataViewModel.roomId
                         param["dataId"] = id
                         return param
-
-
                     }
                 }
             val socketTimeOut = 50000 // u can change this .. here it is 50 seconds

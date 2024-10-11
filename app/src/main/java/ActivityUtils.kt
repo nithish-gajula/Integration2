@@ -2,7 +2,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -46,7 +45,7 @@ object ActivityUtils {
 
     fun navigateToActivity(activity: Activity, intent: Intent) {
         if (intent.component?.className == LoginActivity::class.java.name) {
-            LOGGING.INFO(contextTAG, "Deleted userData.json and user_expenses.json files and navigating to LoginActivity")
+            LOGGING.INFO(contextTAG, "Deleting userData.json and user_expenses.json files and navigating to LoginActivity")
             userDataFile.delete()
             userExpensesFile.delete()
         }

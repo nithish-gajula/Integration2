@@ -1,16 +1,15 @@
 package com.example.integration2
 
 import ActivityUtils
+import LOGGING
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -34,19 +33,18 @@ class EditDetailsActivity : AppCompatActivity() {
     private lateinit var saveBTN: Button
     private lateinit var resultTV: TextView
     private lateinit var resetPasswordTV: TextView
-    private lateinit var profileImage : ShapeableImageView
+    private lateinit var profileImage: ShapeableImageView
     private lateinit var requestQueue: RequestQueue
-    private var contextTAG: String = "EditDetails"
     private lateinit var animationView: LottieAnimationView
     private lateinit var alertDialog: AlertDialog
-    private var latestProfileImage : Int = 1
+    private var latestProfileImage: Int = 1
+    private var contextTAG: String = "EditDetailsActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_details)
 
         userDataViewModel = ViewModelProvider(this)[UserDataViewModel::class.java]
-
         profileImage = findViewById(R.id.profile_image_id)
         nameET = findViewById(R.id.name_et_id)
         emailET = findViewById(R.id.email_et_id)
@@ -66,8 +64,7 @@ class EditDetailsActivity : AppCompatActivity() {
         ageTIL.setStartIconTintList(null)
 
         latestProfileImage = userDataViewModel.profileId.toInt()
-        profileImage.setImageResource(ActivityUtils.avatars[userDataViewModel.profileId.toInt()-1])
-
+        profileImage.setImageResource(ActivityUtils.avatars[userDataViewModel.profileId.toInt() - 1])
 
         val dialogBuilder = AlertDialog.Builder(this)
         val inflater = LayoutInflater.from(this)
@@ -84,13 +81,16 @@ class EditDetailsActivity : AppCompatActivity() {
 
         profileImage.setOnClickListener { selectImagePopUp() }
         saveBTN.setOnClickListener { savaDataFunction() }
-        resetPasswordTV.setOnClickListener { ActivityUtils.navigateToActivity(this, Intent(this, ForgotPasswordActivity::class.java)) }
+        resetPasswordTV.setOnClickListener {
+            ActivityUtils.navigateToActivity(
+                this,
+                Intent(this, ForgotPasswordActivity::class.java)
+            )
+        }
 
     }
 
-    private fun selectImagePopUp(){
-        Toast.makeText(this, "profile Image Clicked",Toast.LENGTH_SHORT).show()
-
+    private fun selectImagePopUp() {
         val builder = AlertDialog.Builder(this)
         val view: View = layoutInflater.inflate(R.layout.select_profile_image, null)
         val avatar1 = view.findViewById<ShapeableImageView>(R.id.select_avatar_1_id)
@@ -194,8 +194,6 @@ class EditDetailsActivity : AppCompatActivity() {
         }
 
         dialog.show()
-
-
     }
 
     private fun savaDataFunction() {
@@ -203,8 +201,6 @@ class EditDetailsActivity : AppCompatActivity() {
         val email = emailET.text.toString().trim()
         val phoneNumber = phoneNumberET.text.toString().trim()
         val age = ageET.text.toString().trim()
-
-
 
         if (name.isEmpty() || name.any { it.isDigit() }) {
             nameET.error = getString(R.string.enter_valid_name)
@@ -227,15 +223,15 @@ class EditDetailsActivity : AppCompatActivity() {
             Method.POST, getString(R.string.spreadsheet_url),
             { response ->
                 Toast.makeText(this, response, Toast.LENGTH_SHORT).show()
-                LOGGING.INFO(contextTAG, response)
+                LOGGING.INFO(contextTAG, "Updating User Details, Got Response - $response")
                 alertDialog.dismiss()
                 ActivityUtils.navigateToActivity(this, Intent(this, LoginActivity::class.java))
             },
             { error ->
+                LOGGING.DEBUG(contextTAG, "Updating User Details, Got Error - $error")
                 animationView.setAnimation(R.raw.error)
                 animationView.playAnimation()
                 Handler(Looper.getMainLooper()).postDelayed({
-                    LOGGING.INFO(contextTAG,error.toString())
                     alertDialog.dismiss()
                 }, 2000)
                 resultTV.visibility = View.VISIBLE

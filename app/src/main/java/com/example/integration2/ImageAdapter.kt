@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.makeramen.roundedimageview.RoundedImageView
 
-class ImageAdapter(private val imageList : ArrayList<Int>, private val viewPager2: ViewPager2)
-    : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>(){
+class ImageAdapter(private val imageList: ArrayList<Int>, private val viewPager2: ViewPager2) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
-    class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val imageView : RoundedImageView = itemView.findViewById(R.id.imageSlide)
+    class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageView: RoundedImageView = itemView.findViewById(R.id.imageSlide)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {

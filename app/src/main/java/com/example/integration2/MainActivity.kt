@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private val contextTAG: String = "MainActivity"
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -80,13 +79,11 @@ class MainActivity : AppCompatActivity() {
         alertDialog.setCanceledOnTouchOutside(false)
 
         joinRoomBTN.setOnClickListener {
-            LOGGING.INFO(contextTAG, "joinRoomBTN clicked")
             resultTV.visibility = View.INVISIBLE
             joinRoomDialog()
         }
 
         createRoomBTN.setOnClickListener {
-            LOGGING.INFO(contextTAG, "createRoomBTN clicked")
             resultTV.visibility = View.INVISIBLE
             createRoomFunction()
         }
@@ -99,7 +96,6 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                LOGGING.INFO(contextTAG, "onBackPressed clicked")
                 finishAffinity()
             }
         })
@@ -197,7 +193,7 @@ class MainActivity : AppCompatActivity() {
                 }, 2000)
             },
             { error ->
-                LOGGING.INFO(contextTAG, " Join Room, Error = $error")
+                LOGGING.DEBUG(contextTAG, " Join Room, Error = $error")
                 animationView.setAnimation(R.raw.error)
                 animationView.playAnimation()
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -241,8 +237,7 @@ class MainActivity : AppCompatActivity() {
                         animationView.playAnimation()
                         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
                         LOGGING.INFO(
-                            contextTAG,
-                            " Room Joining Success - userID = ${jsonItem.getString("id")}, RoomID = ${
+                            contextTAG, "Room Joining Success - userID = ${jsonItem.getString("id")}, RoomID = ${
                                 jsonItem.getString("roomId")
                             }"
                         )
@@ -256,7 +251,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     !roomIdStatus.toBoolean() -> {
-                        LOGGING.INFO(
+                        LOGGING.DEBUG(
                             contextTAG,
                             "Room Joining Failed with Invalid RoomID = ${getString(R.string.invalid_roomId)}"
                         )
@@ -269,7 +264,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     else -> {
-                        LOGGING.INFO(
+                        LOGGING.DEBUG(
                             contextTAG,
                             " Room Joining Failed, Reason - ${getString(R.string.something_went_wrong)}"
                         )
@@ -281,7 +276,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             } else {
-                LOGGING.INFO(
+                LOGGING.DEBUG(
                     contextTAG,
                     " Room Joining Failed, Reason - ${getString(R.string.no_data_found)}"
                 )
@@ -311,7 +306,7 @@ class MainActivity : AppCompatActivity() {
                 }, 2000)
             },
             { error ->
-                LOGGING.INFO(contextTAG, "Create Room, Got Error = $error")
+                LOGGING.DEBUG(contextTAG, "Create Room, Got Error = $error")
                 animationView.setAnimation(R.raw.error)
                 animationView.playAnimation()
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -397,7 +392,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     !userIdStatus.toBoolean() -> {
-                        LOGGING.INFO(
+                        LOGGING.DEBUG(
                             contextTAG,
                             "Room creation failed, Reason - ${getString(R.string.user_id_not_found)}"
                         )
@@ -408,7 +403,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     else -> {
-                        LOGGING.INFO(
+                        LOGGING.DEBUG(
                             contextTAG,
                             "Room creation failed, Reason - ${getString(R.string.something_went_wrong)}"
                         )
@@ -420,7 +415,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
             } else {
-                LOGGING.INFO(
+                LOGGING.DEBUG(
                     contextTAG,
                     "Room Creation failed, Reason - ${getString(R.string.no_data_found)}"
                 )
@@ -430,7 +425,7 @@ class MainActivity : AppCompatActivity() {
                 resultTV.text = getString(R.string.no_data_found)
             }
         } catch (e: JSONException) {
-            LOGGING.INFO(contextTAG, "JSONException ${e.message}")
+            LOGGING.DEBUG(contextTAG, "JSONException ${e.message}")
             e.printStackTrace()
         }
     }
@@ -450,6 +445,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         } catch (e: IOException) {
+            LOGGING.DEBUG(contextTAG, "Storing roomId and AdminStatus failed, ${e.message}")
             e.printStackTrace()
         }
     }
@@ -468,6 +464,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         } catch (e: IOException) {
+            LOGGING.DEBUG(contextTAG, "Storing room id failed, ${e.message}")
             e.printStackTrace()
         }
     }

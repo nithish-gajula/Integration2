@@ -1,5 +1,7 @@
 package com.example.integration2
 
+import ActivityUtils
+import LOGGING
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -37,9 +39,9 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var resultTV: TextView
     private lateinit var loginTV: TextView
     private lateinit var requestQueue: RequestQueue
-    private var contextTAG: String = "SignupActivity"
     private lateinit var animationView: LottieAnimationView
     private lateinit var alertDialog: AlertDialog
+    private var contextTAG: String = "SignupActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,12 +136,14 @@ class SignupActivity : AppCompatActivity() {
         val stringRequest = object : StringRequest(
             Method.POST, getString(R.string.spreadsheet_url),
             { response ->
+                LOGGING.INFO(contextTAG, "Signup Request, Got Response $response")
                 extractSignupJsonData(response)
                 Handler(Looper.getMainLooper()).postDelayed({
                     alertDialog.dismiss()
                 }, 2000)
             },
             { error ->
+                LOGGING.DEBUG(contextTAG, "Signup Request, Got Error $error")
                 animationView.setAnimation(R.raw.error)
                 animationView.playAnimation()
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -169,30 +173,29 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun extractSignupJsonData(jsonResponse: String) {
-        LOGGING.DEBUG(contextTAG, "Entered in extractSignupJsonData Function")
         val emailStatus: String
         val signupStatus: String
 
         try {
-            LOGGING.DEBUG(contextTAG, " Entered in try block")
             val jsonObj = JSONObject(jsonResponse)
             val jsonArray = jsonObj.getJSONArray("items")
-            LOGGING.DEBUG(contextTAG, "items = $jsonArray")
 
             if (jsonArray.length() > 0) {
                 val jsonItem = jsonArray.getJSONObject(0)
                 emailStatus = jsonItem.getBoolean("email_status").toString()
                 signupStatus = jsonItem.getBoolean("result").toString()
 
-                LOGGING.DEBUG(contextTAG, "email_status = $emailStatus, signupStatus = $signupStatus")
-
                 when {
                     signupStatus.toBoolean() -> {
                         animationView.setAnimation(R.raw.protected_shield)
                         animationView.playAnimation()
+                        LOGGING.INFO(contextTAG, "Signup Success")
                         Toast.makeText(this, "Signup Success", Toast.LENGTH_LONG).show()
                         Handler(Looper.getMainLooper()).postDelayed({
-                            ActivityUtils.navigateToActivity(this, Intent(this, LoginActivity::class.java))
+                            ActivityUtils.navigateToActivity(
+                                this,
+                                Intent(this, LoginActivity::class.java)
+                            )
                         }, 2000)
                     }
 
@@ -204,6 +207,7 @@ class SignupActivity : AppCompatActivity() {
                     }
 
                     else -> {
+                        LOGGING.DEBUG(contextTAG, "Signup Failed, Reason - ${getString(R.string.something_went_wrong)}")
                         animationView.setAnimation(R.raw.error)
                         animationView.playAnimation()
                         resultTV.visibility = View.VISIBLE
@@ -212,12 +216,15 @@ class SignupActivity : AppCompatActivity() {
                 }
 
             } else {
+                LOGGING.DEBUG(contextTAG, "Signup Failed, Reason - ${getString(R.string.no_data_found)}")
                 animationView.setAnimation(R.raw.error)
                 animationView.playAnimation()
                 resultTV.visibility = View.VISIBLE
                 resultTV.text = getString(R.string.no_data_found)
             }
         } catch (e: JSONException) {
+            LOGGING.DEBUG(contextTAG, "Signup Failed, Reason - ${e.printStackTrace()}")
+            Log.e(contextTAG, "Signup Failed, Reason - ${e.printStackTrace()}")
             e.printStackTrace()
         }
     }
@@ -236,7 +243,10 @@ class SignupActivity : AppCompatActivity() {
         val userChar = nameET.text.toString()[0]
         val random = generateRandomString()
 
-        return "${random[0]}$year$month$userChar$day$hour${random[1]}$weekday$minute$second${random[2]}"
+        val finalUserID = "${random[0]}$year$month$userChar$day$hour${random[1]}$weekday$minute$second${random[2]}"
+        LOGGING.INFO(contextTAG, "UserID created as $finalUserID")
+
+        return finalUserID
     }
 
     private fun generateRandomString(): String {

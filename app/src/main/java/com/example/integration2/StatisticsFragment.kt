@@ -8,10 +8,16 @@ import androidx.fragment.app.Fragment
 
 class StatisticsFragment : Fragment() {
 
+
+    private val contextTAG: String = "StatisticsFragment"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val v = inflater.inflate(R.layout.fragment_statistics, container, false)
+
+
         // Inflate the layout for this fragment
         /*************************************
          * Implement following Charts, Also try Material Dat Visualization
@@ -23,6 +29,10 @@ class StatisticsFragment : Fragment() {
          * Everyone - Specific Month
          * Everyone - Overall
          **************************************/
-        return inflater.inflate(R.layout.fragment_statistics, container, false)
+
+
+        return v
     }
+
+
 }
