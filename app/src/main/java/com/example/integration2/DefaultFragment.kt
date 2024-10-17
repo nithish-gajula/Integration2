@@ -10,12 +10,11 @@ class DefaultFragment : Fragment() {
 
     private val contextTAG: String = "DefaultFragment"
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_default, container, false)
+        val view = inflater.inflate(R.layout.fragment_default, container, false)
+
+        return view
     }
 
 }

@@ -54,6 +54,8 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     implementation("com.makeramen:roundedimageview:2.3.0")
     implementation("com.github.imcloudfloating:markdown-it-android:1.0.4")
+    implementation("com.github.AAChartModel:AAChartCore-Kotlin:7.1.0")
+    implementation("com.google.code.gson:gson:2.10.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

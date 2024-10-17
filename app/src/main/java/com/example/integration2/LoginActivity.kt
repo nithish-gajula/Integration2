@@ -92,10 +92,7 @@ class LoginActivity : AppCompatActivity() {
         val email = emailET.text.trim().toString()
         val password = passwordET.text.trim().toString()
 
-        if (!email.endsWith("@gmail.com") || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(
-                email
-            ).matches()
-        ) {
+        if (!email.endsWith("@gmail.com") || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailET.error = getString(R.string.enter_valid_email)
             return
         }
@@ -181,10 +178,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     emailStatus.toBoolean() && !passwordStatus.toBoolean() -> {
-                        LOGGING.DEBUG(
-                            contextTAG,
-                            "Login failed, Reason - ${getString(R.string.incorrect_password)}"
-                        )
+                        LOGGING.DEBUG(contextTAG, "Login failed, Reason - ${getString(R.string.incorrect_password)}")
                         animationView.setAnimation(R.raw.error)
                         animationView.playAnimation()
                         resultTV.visibility = View.VISIBLE
@@ -192,10 +186,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     else -> {
-                        LOGGING.DEBUG(
-                            contextTAG,
-                            "Login failed, Reason - ${getString(R.string.no_user_data_found)}"
-                        )
+                        LOGGING.DEBUG(contextTAG, "Login failed, Reason - ${getString(R.string.no_user_data_found)}")
                         animationView.setAnimation(R.raw.error)
                         animationView.playAnimation()
                         resultTV.visibility = View.VISIBLE

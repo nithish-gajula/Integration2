@@ -81,12 +81,7 @@ class EditDetailsActivity : AppCompatActivity() {
 
         profileImage.setOnClickListener { selectImagePopUp() }
         saveBTN.setOnClickListener { savaDataFunction() }
-        resetPasswordTV.setOnClickListener {
-            ActivityUtils.navigateToActivity(
-                this,
-                Intent(this, ForgotPasswordActivity::class.java)
-            )
-        }
+        resetPasswordTV.setOnClickListener { ActivityUtils.navigateToActivity(this, Intent(this, ForgotPasswordActivity::class.java)) }
 
     }
 

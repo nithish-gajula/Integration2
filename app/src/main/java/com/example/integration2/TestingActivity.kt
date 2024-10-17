@@ -20,14 +20,11 @@ class TestingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_testing)
 
-        // Initialize the views
         drawerLayout = findViewById(R.id.drawer_layout)
         toolbar = findViewById(R.id.toolbar)
 
-        // Setup toolbar
         setSupportActionBar(toolbar)
 
-        // Setup ActionBarDrawerToggle
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()

@@ -50,26 +50,22 @@ class AddDataFragment : Fragment() {
     private var foodId: Int = 0
     private val contextTAG: String = "AddDataFragment"
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val v = inflater.inflate(R.layout.fragment_add_data, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_add_data, container, false)
 
-        uploadData = v.findViewById(R.id.uploadid)
-        clearData = v.findViewById(R.id.clear_id)
-        amount = v.findViewById(R.id.amountid)
-        description = v.findViewById(R.id.descriptionid)
-        date = v.findViewById(R.id.dateid)
-        viewPager2 = v.findViewById(R.id.viewpagerImageSlider_id)
-
-        dateTil = v.findViewById(R.id.date_til)
-        amountTil = v.findViewById(R.id.amount_til)
-        descriptionTil = v.findViewById(R.id.description_til)
+        uploadData = view.findViewById(R.id.uploadid)
+        clearData = view.findViewById(R.id.clear_id)
+        amount = view.findViewById(R.id.amountid)
+        description = view.findViewById(R.id.descriptionid)
+        date = view.findViewById(R.id.dateid)
+        viewPager2 = view.findViewById(R.id.viewpagerImageSlider_id)
+        dateTil = view.findViewById(R.id.date_til)
+        amountTil = view.findViewById(R.id.amount_til)
+        descriptionTil = view.findViewById(R.id.description_til)
 
         onCreateSetup()
 
-        return v
+        return view
     }
 
     private fun onCreateSetup() {
@@ -96,7 +92,7 @@ class AddDataFragment : Fragment() {
         imageList.add(R.drawable.food_15)
         imageList.add(R.drawable.food_16)
 
-        adapter = ImageAdapter(imageList, viewPager2)
+        adapter = ImageAdapter(imageList)
         viewPager2.adapter = adapter
         viewPager2.offscreenPageLimit = 3
         viewPager2.clipToPadding = false
@@ -246,8 +242,7 @@ class AddDataFragment : Fragment() {
                     }
                 }
             val socketTimeOut = 50000 // u can change this .. here it is 50 seconds
-            val retryPolicy: RetryPolicy =
-                DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            val retryPolicy: RetryPolicy = DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
             stringRequest.setRetryPolicy(retryPolicy)
             val queue = Volley.newRequestQueue(requireActivity().applicationContext)
             queue.add(stringRequest)

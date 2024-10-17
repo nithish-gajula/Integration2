@@ -47,7 +47,7 @@ class CustomAdapter(private val context: Context, private val dataList: List<Any
             textViewSection.text = section.sectionName
 
             val textViewAmount = view.findViewById<TextView>(R.id.section_header_amount)
-            textViewAmount.text = section.amount
+            textViewAmount.text = "₹ " + section.amount
         } else {
             val item = item as Item
             val userNameTV = view.findViewById<TextView>(R.id.user_name_tv_id)

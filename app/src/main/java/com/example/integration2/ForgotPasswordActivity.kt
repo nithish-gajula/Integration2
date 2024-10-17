@@ -34,7 +34,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private lateinit var requestQueue: RequestQueue
     private lateinit var animationView: LottieAnimationView
     private lateinit var alertDialog: AlertDialog
-
     private val contextTAG: String = "ForgotPasswordActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,10 +74,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val password = passwordET.text.trim().toString()
         val rePassword = confirmPasswordET.text.trim().toString()
 
-        if (!email.endsWith("@gmail.com") || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(
-                email
-            ).matches()
-        ) {
+        if (!email.endsWith("@gmail.com") || email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailET.error = getString(R.string.enter_valid_email)
             return
         }

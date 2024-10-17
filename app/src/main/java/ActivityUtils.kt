@@ -14,6 +14,7 @@ object ActivityUtils {
 
     val userDataFileName = "userdata.json"
     val userExpensesFileName = "user_expenses.json"
+    val roomMonthlyExpensesFileName = "room_monthly_expenses.json"
     val reportedLogsFileName = "logs.txt"
     val reportedReadmeLogsFileName = "logs.md"
     val directoryName = "RoomBudget"
@@ -22,6 +23,7 @@ object ActivityUtils {
         directoryName
     )
     val userDataFile = File(directory, userDataFileName)
+    val roomMontlyExpensesFile = File(directory, roomMonthlyExpensesFileName)
     val reportedLogsFile = File(directory, reportedLogsFileName)
     val reportedReadmeLogsFile = File(directory, reportedReadmeLogsFileName)
     val userExpensesFile = File(directory, userExpensesFileName)
@@ -48,6 +50,7 @@ object ActivityUtils {
             LOGGING.INFO(contextTAG, "Deleting userData.json and user_expenses.json files and navigating to LoginActivity")
             userDataFile.delete()
             userExpensesFile.delete()
+            roomMontlyExpensesFile.delete()
         }
         activity.startActivity(intent)
     }

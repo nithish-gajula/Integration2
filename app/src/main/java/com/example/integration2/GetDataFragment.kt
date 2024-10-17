@@ -50,18 +50,15 @@ class GetDataFragment : Fragment() {
     private var groupedItemsJson = JSONObject()
     private val contextTAG: String = "GetDataFragment"
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val v = inflater.inflate(R.layout.fragment_get_data, container, false)
-        listView = v.findViewById(R.id.lv_items)
-        totalAmountTV = v.findViewById(R.id.total_Amount_id)
-        warningTV = v.findViewById(R.id.get_data_warning_id)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_get_data, container, false)
+        listView = view.findViewById(R.id.lv_items)
+        totalAmountTV = view.findViewById(R.id.total_Amount_id)
+        warningTV = view.findViewById(R.id.get_data_warning_id)
         roomActivity = activity as RoomActivity
-        val btmsheet = v.findViewById<FrameLayout>(R.id.bottom_sheet_id)
+        val bottomSheet = view.findViewById<FrameLayout>(R.id.bottom_sheet_id)
 
-        BottomSheetBehavior.from(btmsheet).apply {
+        BottomSheetBehavior.from(bottomSheet).apply {
             peekHeight = 0
             this.state = BottomSheetBehavior.STATE_EXPANDED
         }
@@ -72,7 +69,6 @@ class GetDataFragment : Fragment() {
             loadUserExpensesFromStorage()
         }
 
-//        // Set item click listener
         listView.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position)
             if (selectedItem is Item) {
@@ -85,18 +81,18 @@ class GetDataFragment : Fragment() {
                 delete(id, userName, date, amount, fullDescription)
             } else {
                 bottomSheetState =
-                    BottomSheetBehavior.STATE_EXPANDED == BottomSheetBehavior.from(btmsheet).state
+                    BottomSheetBehavior.STATE_EXPANDED == BottomSheetBehavior.from(bottomSheet).state
 
                 if (!bottomSheetState) {
-                    BottomSheetBehavior.from(btmsheet).state = BottomSheetBehavior.STATE_EXPANDED
+                    BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
                     bottomSheetState = true
                 } else {
-                    BottomSheetBehavior.from(btmsheet).state = BottomSheetBehavior.STATE_COLLAPSED
+                    BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_COLLAPSED
                     bottomSheetState = false
                 }
             }
         }
-        return v
+        return view
     }
 
     private fun getItems() {
@@ -170,8 +166,7 @@ class GetDataFragment : Fragment() {
                     }
                     totalAmount += jo.getString("amount").toDouble()
                     monthData.put(newData)
-                    groupedItemsJson.getJSONObject(monthKey)
-                        .put("MonthTotal", monthTotal + jo.getString("amount").toDouble())
+                    groupedItemsJson.getJSONObject(monthKey).put("MonthTotal", monthTotal + jo.getString("amount").toDouble())
                 } else {
                     val newDataArray = JSONArray()
                     val newData = JSONObject().apply {
@@ -288,13 +283,7 @@ class GetDataFragment : Fragment() {
         return DateFormats(formattedDate1, formattedDate2)
     }
 
-    private fun delete(
-        id: String,
-        userName: String,
-        date: String,
-        amount: String,
-        fullDescription: String
-    ) {
+    private fun delete(id: String, userName: String, date: String, amount: String, fullDescription: String) {
         val mBuilder = AlertDialog.Builder(requireActivity())
         val view1: View = layoutInflater.inflate(R.layout.delete_confirmation_dialog, null)
         val userNameD = view1.findViewById<TextView>(R.id.user_confirm_id)
@@ -353,14 +342,12 @@ class GetDataFragment : Fragment() {
                     }
                 }
             val socketTimeOut = 50000 // u can change this .. here it is 50 seconds
-            val retryPolicy: RetryPolicy =
-                DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+            val retryPolicy: RetryPolicy = DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
             stringRequest.setRetryPolicy(retryPolicy)
             val queue = Volley.newRequestQueue(activity)
             queue.add(stringRequest)
         }
         cancel.setOnClickListener { dialog1.dismiss() }
     }
-
 
 }

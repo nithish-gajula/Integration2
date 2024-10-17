@@ -1,5 +1,4 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,9 +14,9 @@
             android:id="@+id/get_data_warning_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_centerInParent="true"
-            android:visibility="gone"/>
+            android:gravity="center"
+            android:visibility="gone" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -36,16 +35,16 @@
         android:id="@+id/bottom_sheet_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:background="@drawable/bottom_sheet_corners"
+        android:orientation="vertical"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_remove_24"
+            android:layout_gravity="center|top"
             android:scaleType="centerCrop"
-            android:layout_gravity="center|top"/>
+            android:src="@drawable/ic_remove_24" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +58,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Total Amount  : "
+                android:text=" Total Amount  : ₹ "
                 android:textColor="#000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -78,15 +77,10 @@
                 app:layout_constraintStart_toEndOf="@+id/textView2" />
 
 
-
-
         </LinearLayout>
 
 
     </FrameLayout>
-
-
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
