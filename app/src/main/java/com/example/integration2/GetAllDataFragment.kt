@@ -21,14 +21,12 @@ import com.android.volley.Request
 import com.android.volley.RetryPolicy
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.FileWriter
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -98,9 +96,9 @@ class GetAllDataFragment : Fragment() {
     private fun parseItems(jsonResponse: String) {
         try {
             val jsonObj = JSONObject(jsonResponse)
-            val resultJson = createCustomJson(jsonResponse)
+            val resultJson = createMonthlyExpensesJson(jsonResponse)
             createAndWriteToFile(resultJson)
-            Log.d(contextTAG,resultJson.toString())
+
             val jsonArray = jsonObj.getJSONArray("items")
 
             for (i in 0 until jsonArray.length()) {
@@ -180,161 +178,92 @@ class GetAllDataFragment : Fragment() {
         }
     }
 
-    fun createCustomJson(jsonResponse: String): JSONObject {
-        // Parse the input JSON
+    private fun createMonthlyExpensesJson(jsonResponse: String): JSONObject {
         val jsonObj = JSONObject(jsonResponse)
-        val items = jsonObj.getJSONArray("items")
+        val itemsArray = jsonObj.getJSONArray("items")
 
-        // A map to hold the grouped data
-        val groupedData = mutableMapOf<String, MutableList<MutableList<Int>>>()
+        // Create the result JSON object
+        val resultJson = JSONObject()
 
-        // Iterate through each user item
-        for (i in 0 until items.length()) {
-            val userItem = items.getJSONObject(i)
-            val records = userItem.getJSONArray("records")
+        // Roommates list (Name and number of roommates)
+        val roommatesList = mutableListOf<String>()
+        var totalRoommates = 0
 
-            // Process each record for the current user
+        // A map to hold the expenses per month
+        val monthlyExpenses = mutableMapOf<String, MutableList<MutableList<Int>>>()
+
+        for (i in 0 until itemsArray.length()) {
+            val userObj = itemsArray.getJSONObject(i)
+            val userId = userObj.getString("userId")
+            val records = userObj.getJSONArray("records")
+
+            // Extract the roommate's name (from records) and increment the total roommates count
+            val userName = records.getJSONObject(0).getString("userName")
+            roommatesList.add(userName)
+            totalRoommates += 1
+
             for (j in 0 until records.length()) {
                 val record = records.getJSONObject(j)
-
-                // Extract the date and amount
-                val date = record.getString("date")
+                val date = record.getString("date") // e.g., "04/21/2024"
                 val amount = record.getInt("amount")
 
-                // Parse the date to get the month and year
-                val dateFormat = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-                val calendar = Calendar.getInstance()
-                calendar.time = dateFormat.parse(date)!!
+                // Extract month and year from the date
+                val monthYear = getMonthYearFromDate(date)
 
-                val monthYearKey = SimpleDateFormat("MMM yyyy", Locale.getDefault()).format(calendar.time)
-
-                // Initialize the list for the month/year if it doesn't exist
-                if (!groupedData.containsKey(monthYearKey)) {
-                    groupedData[monthYearKey] = mutableListOf(mutableListOf(), mutableListOf())
+                // Initialize the month if not already present
+                if (!monthlyExpenses.containsKey(monthYear)) {
+                    monthlyExpenses[monthYear] = mutableListOf(mutableListOf(), mutableListOf())
                 }
 
-                // Add the amount to the correct list based on userId
-                if (userItem.getString("userId") == "m2410P1718R5625Z") {
-                    groupedData[monthYearKey]!![0].add(amount) // First user's amounts
+                // Depending on the userId, add the amount to the correct list (index 0 or 1)
+                if (userId == "m2410P1718R5625Z") {
+                    monthlyExpenses[monthYear]!![0].add(amount) // Person A's expenses
                 } else {
-                    groupedData[monthYearKey]!![1].add(amount) // Second user's amounts
+                    monthlyExpenses[monthYear]!![1].add(amount) // Person B's expenses
                 }
             }
         }
 
-        // Convert the map to JSONObject
-        val finalJson = JSONObject()
-        for ((key, value) in groupedData) {
-            finalJson.put(key, JSONArray(value))
+        // Add the roommates information to the result JSON
+        resultJson.put("Roommates", JSONArray().apply {
+            put(JSONArray().put(totalRoommates)) // Number of roommates
+            put(JSONArray(roommatesList)) // Roommate names
+        })
+
+        // Add the monthly expenses to the result JSON
+        for ((month, expenses) in monthlyExpenses) {
+            resultJson.put(month, JSONArray().apply {
+                put(JSONArray(expenses[0])) // Person A's expenses for the month
+                put(JSONArray(expenses[1])) // Person B's expenses for the month
+            })
         }
 
-        return finalJson
+        return resultJson
     }
 
+    // Helper function to extract "Month Year" from the date string
+    private fun getMonthYearFromDate(date: String): String {
+        val parts = date.split("/")
+        val month = parts[0].toInt()
+        val year = parts[2]
 
-    private fun parseItems_new(jsonResponse: String) {
-        try {
-            val jsonObj = JSONObject(jsonResponse)
-            val jsonArray = jsonObj.getJSONArray("items")
-
-            // Get the months first
-            val months = groupedItemsJson.keys().asSequence().toList()
-
-            // Initialize the map to hold user monthly totals
-            val userMonthlyTotals = mutableMapOf<String, MutableList<Double>>()
-
-            // Iterate over each item
-            for (i in 0 until jsonArray.length()) {
-                val jo1 = jsonArray.getJSONObject(i)
-                val jo2 = jo1.getJSONArray("records")
-
-                for (j in 0 until jo2.length()) {
-                    val jo = jo2.getJSONObject(j)
-
-                    val dateFormats = convertDateFormat(jo.getString("date"))
-                    val monthKey = dateFormats.format2
-
-                    // Initialize the user's list in the map if it doesn't exist
-                    val userName = jo.getString("userName")
-                    if (userMonthlyTotals[userName] == null) {
-                        userMonthlyTotals[userName] = MutableList(months.size) { 0.0 } // Create a list for each month
-                    }
-
-                    if (groupedItemsJson.has(monthKey)) {
-                        val monthData = groupedItemsJson.getJSONObject(monthKey).getJSONArray("MonthData")
-                        val monthTotal = groupedItemsJson.getJSONObject(monthKey).getDouble("MonthTotal")
-
-                        val newData = JSONObject().apply {
-                            put("position1", jo.getString("userName"))
-                            put("position2", limitDescription(jo.getString("description")))
-                            put("position3", dateFormats.format1)
-                            put("position4", "₹ ${jo.getString("amount")}")
-                            put("position5", jo.getString("dataId"))
-                            put("position6", jo.getString("profileId"))
-                            put("position7", jo.getString("description"))
-                        }
-
-                        monthData.put(newData)
-
-                        // Update user's monthly total for the current month
-                        val monthIndex = months.indexOf(monthKey)
-                        if (monthIndex != -1) {
-                            userMonthlyTotals[userName]!![monthIndex] += jo.getString("amount").toDouble()
-                        }
-
-                        groupedItemsJson.getJSONObject(monthKey).put("MonthTotal", monthTotal + jo.getString("amount").toDouble())
-                    } else {
-                        val newDataArray = JSONArray()
-                        val newData = JSONObject().apply {
-                            put("position1", jo.getString("userName"))
-                            put("position2", limitDescription(jo.getString("description")))
-                            put("position3", dateFormats.format1)
-                            put("position4", "₹ ${jo.getString("amount")}")
-                            put("position5", jo.getString("dataId"))
-                            put("position6", jo.getString("profileId"))
-                            put("position7", jo.getString("description"))
-                        }
-                        newDataArray.put(newData)
-
-                        val monthObject = JSONObject().apply {
-                            put("MonthName", monthKey)
-                            put("MonthData", newDataArray)
-                            put("MonthTotal", jo.getString("amount").toDouble())
-                        }
-
-                        groupedItemsJson.put(monthKey, monthObject)
-
-                        // Update user's monthly total for the current month
-                        val monthIndex = months.indexOf(monthKey)
-                        if (monthIndex != -1) {
-                            userMonthlyTotals[userName]!![monthIndex] += jo.getString("amount").toDouble()
-                        }
-                    }
-                }
-            }
-
-            Log.d(contextTAG, "Months list contents: $months")
-
-            val dateFormat = SimpleDateFormat("MMM yyyy", Locale.ENGLISH)
-            val dateList = months.map { dateFormat.parse(it) }
-            val sortedDescending = dateList.sortedDescending()
-            val sortedMonths = sortedDescending.map { dateFormat.format(it) }
-
-            Log.d(contextTAG, "Sorted Months list contents: $sortedMonths")
-
-            // Prepare monthlyTotal from the userMonthlyTotals map
-            val monthlyTotal = userMonthlyTotals.values.toList()
-            Log.d(contextTAG, "Monthly Total: $monthlyTotal")
-
-            categorizeItems(sortedMonths)
-
-        } catch (e: JSONException) {
-            LOGGING.DEBUG(contextTAG, "Got error $e")
-            warningTV.visibility = View.VISIBLE
-            warningTV.text = jsonResponse
-            roomActivity.alertDialog.dismiss()
-            e.printStackTrace()
+        // Convert the month number to a textual month abbreviation (e.g., "Apr 2024")
+        val monthName = when (month) {
+            1 -> "Jan"
+            2 -> "Feb"
+            3 -> "Mar"
+            4 -> "Apr"
+            5 -> "May"
+            6 -> "Jun"
+            7 -> "Jul"
+            8 -> "Aug"
+            9 -> "Sep"
+            10 -> "Oct"
+            11 -> "Nov"
+            12 -> "Dec"
+            else -> "Unknown"
         }
+        return "$monthName $year"
     }
 
 
