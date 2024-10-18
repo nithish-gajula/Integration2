@@ -6,9 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartModel
 import com.github.aachartmodel.aainfographics.aachartcreator.AAChartType
@@ -20,46 +17,27 @@ import java.io.FileInputStream
 
 class StatisticsFragment : Fragment() {
 
-    private lateinit var aaChartView: AAChartView
-    private lateinit var chartTypeSpinner: Spinner
+    private lateinit var aaChartViewColumn: AAChartView
+    private lateinit var aaChartViewSpline: AAChartView
     private lateinit var jsonObject: JSONObject
     private val categories = mutableListOf<String>()
     private val seriesArray = mutableListOf<AASeriesElement>()
     private val contextTAG: String = "StatisticsFragment"
 
-    // List of available chart types
-    private val chartTypes = listOf(
-        "Column" to AAChartType.Column,
-        "Spline" to AAChartType.Spline,
-    )
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_statistics, container, false)
 
-        aaChartView = view.findViewById(R.id.aaChartView)
-        chartTypeSpinner = view.findViewById(R.id.chartTypeSpinner)
+        aaChartViewColumn = view.findViewById(R.id.aaChartViewColumn)
+        aaChartViewSpline = view.findViewById(R.id.aaChartViewSpline)
 
         // Read JSON data
         jsonObject = readJsonFromFile(ActivityUtils.roomMontlyExpensesFile)
 
-        // Set up the spinner with chart types
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, chartTypes.map { it.first })
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        chartTypeSpinner.adapter = adapter
-
         // Call setupChart() to populate data
         setupChart(jsonObject)
 
-        chartTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedChartType = chartTypes[position].second
-                applyCustomCharts(chartTypes[position].first, selectedChartType)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Default chart type can be set if nothing is selected
-            }
-        }
+        applyCustomCharts("Column", AAChartType.Column, aaChartViewColumn)
+        applyCustomCharts("Spline", AAChartType.Spline, aaChartViewSpline)
 
         return view
     }
@@ -115,12 +93,9 @@ class StatisticsFragment : Fragment() {
                     .data(roommatesExpenses[i].toTypedArray()) // Set the expenses data
             )
         }
-
-        // Initial chart display after setup
-        applyCustomCharts("Column", AAChartType.Column)
     }
 
-    private fun applyCustomCharts(title: String, type: AAChartType) {
+    private fun applyCustomCharts(title: String, type: AAChartType, aaChartView: AAChartView) {
         // Ensure categories and seriesArray have been populated before drawing chart
         if (categories.isNotEmpty() && seriesArray.isNotEmpty()) {
             val aaChartModel = AAChartModel()
@@ -129,7 +104,7 @@ class StatisticsFragment : Fragment() {
                 .subtitle("Comparing Expenses of Roommates")
                 .categories(categories.toTypedArray()) // Use the months from the JSON
                 .dataLabelsEnabled(true)
-                .tooltipEnabled(true) // Enable tooltips
+                .tooltipEnabled(false)
                 .yAxisTitle("Expenditure")
                 .series(seriesArray.toTypedArray()) // Use dynamically generated series
 
