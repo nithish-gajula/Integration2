@@ -13,9 +13,9 @@
     <color name="white_700">#FFFFFFFF</color>
 
 
-    <color name="blank">#696969</color>
+    <color name="dark_grey">#696969</color>
     <color name="grey">#F2F2F2</color>
-    <color name="sky_blue">#FF0076F7</color>
+    <color name="sky_blue">#0076F7</color>
 
     <color name="blue">#2196F3</color>
     <color name="orange">#FB8C00</color>
@@ -37,5 +37,6 @@
     <color name="lightGold_3">#ffec4d</color>
     <color name="lightGold_2">#ffec4d</color>
     <color name="lightGold_1">#ffe14d</color>
+
 
 </resources>

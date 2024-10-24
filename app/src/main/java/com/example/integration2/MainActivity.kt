@@ -135,8 +135,21 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_logout -> {
-                    LOGGING.INFO(contextTAG, "User Chosen to Logout from menu")
-                    ActivityUtils.navigateToActivity(this, Intent(this, LoginActivity::class.java))
+                    // Create a confirmation dialog
+                    androidx.appcompat.app.AlertDialog.Builder(this)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Logout") { _, _ ->
+                            // If the user confirms, proceed with logout
+                            LOGGING.ERROR(contextTAG, "User Logged out from Menu")
+                            ActivityUtils.navigateToActivity(this, Intent(this, LoginActivity::class.java))
+                        }
+                        .setNegativeButton("Cancel") { dialog, _ ->
+                            // If the user cancels, dismiss the dialog
+                            dialog.dismiss()
+                        }
+                        .show()
+
                     true
                 }
 

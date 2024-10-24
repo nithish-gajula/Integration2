@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="15dp"
-                android:backgroundTint="#0076F7"
+                android:backgroundTint="@color/sky_blue"
                 android:fontFamily="sans-serif-medium"
                 android:text="Submit"
                 android:textColor="@color/white"

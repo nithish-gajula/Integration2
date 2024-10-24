@@ -4,7 +4,6 @@
     <string name="spreadsheet_url">https://script.google.com/macros/s/AKfycbzFKvumCrRwhmzmxBPM0T7fez8Nog5fmywyRdnxJb5wzSRFvon80by2Y-ZK6aEqM6pW/exec</string>
 
 
-
     <string name="incorrect_password">Incorrect Password</string>
     <string name="no_data_found">No Data Found</string>
     <string name="no_user_data_found">Email not exists</string>
@@ -28,7 +27,7 @@
     <string name="version">2.1</string>
 
     <string name="about_developer">
-        This application was developed by - <font face="serif" fgcolor='#CC000000'> <b> Nithish G </b> </font>
+        Created with care by <font face="serif" fgcolor='#CC000000'> <b>Nithish Gajula</b> </font>
     </string>
 
     <string name="email_info">mailto:gajulanithish000@gmail.com</string>
@@ -55,7 +54,6 @@
 
     // Get Data Fragment
     <string name="total_amount_GD"> ₹ %1$d</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="open_drawer">Open drawer</string>
     <string name="close_drawer">Close drawer</string>

@@ -36,8 +36,8 @@ class StatisticsFragment : Fragment() {
         // Call setupChart() to populate data
         setupChart(jsonObject)
 
-        applyCustomCharts("Column", AAChartType.Column, aaChartViewColumn)
-        applyCustomCharts("Spline", AAChartType.Spline, aaChartViewSpline)
+        applyCustomCharts("Bar Chart", AAChartType.Column, aaChartViewColumn)
+        applyCustomCharts("Line Chart", AAChartType.Spline, aaChartViewSpline)
 
         return view
     }

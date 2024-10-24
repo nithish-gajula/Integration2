@@ -37,7 +37,7 @@ class RoomActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setLogo(R.drawable.android_os)
+        supportActionBar!!.setLogo(R.mipmap.app_icon_48)
         supportActionBar!!.setDisplayUseLogoEnabled(true)
 
         customOverflowIcon = toolbar.findViewById(R.id.custom_overflow_icon)
@@ -61,25 +61,30 @@ class RoomActivity : AppCompatActivity() {
             when (id) {
                 R.id.addData -> {
                     replaceFragment(AddDataFragment())
-                    toolbar.title = "  Add Data"
+                    toolbar.title = "Add Data"
+                    toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleStyle) // Revert to normal style
                 }
 
                 R.id.myData -> {
                     replaceFragment(GetDataFragment())
-                    toolbar.title = "  My Expenses"
+                    toolbar.title = "My Expenses"
+                    toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleStyle) // Revert to normal style
                 }
 
                 R.id.roomData -> {
                     replaceFragment(GetAllDataFragment())
-                    toolbar.title = "  Room Expenses"
+                    toolbar.title = "Room Expenses"
+                    toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleStyle) // Revert to normal style
                 }
 
                 R.id.profile -> {
                     replaceFragment(StatisticsFragment())
-                    toolbar.title = "  Statistics"
+                    toolbar.title = "Statistics"
+                    toolbar.setTitleTextAppearance(this, R.style.ToolbarTitleStyle) // Revert to normal style
                 }
             }
         }
+
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -127,10 +132,24 @@ class RoomActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_logout -> {
-                    LOGGING.ERROR(contextTAG, "User Logged out from Menu")
-                    ActivityUtils.navigateToActivity(this, Intent(this, LoginActivity::class.java))
+                    // Create a confirmation dialog
+                    AlertDialog.Builder(this)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Logout") { _, _ ->
+                            // If the user confirms, proceed with logout
+                            LOGGING.ERROR(contextTAG, "User Logged out from Menu")
+                            ActivityUtils.navigateToActivity(this, Intent(this, LoginActivity::class.java))
+                        }
+                        .setNegativeButton("Cancel") { dialog, _ ->
+                            // If the user cancels, dismiss the dialog
+                            dialog.dismiss()
+                        }
+                        .show()
+
                     true
                 }
+
 
                 else -> false
             }
